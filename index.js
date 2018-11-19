@@ -38,7 +38,7 @@ const sendMessage = (chat_id, text) =>
     text,
   });
 
-// Persistance
+// Persistence
 const sqlite = require('sqlite');
 const dbPromise =  sqlite.open('./db.sqlite', { Promise });
 const prepareQuery = `
@@ -56,6 +56,8 @@ async function main() {
   const rows = await db.all(selectQuery(data.map(el => el.id)));
   const dbIdentifiers = rows.map(row => row.identifier);
   const newData = data.filter(el => !dbIdentifiers.includes(el.id));
+
+  // Promises in sequence
   await newData.reduce((prev, el) => prev.then(async () => {
     await sendMessage(chat, el.text);
     return db.run(insertQuery(el));
