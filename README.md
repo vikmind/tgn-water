@@ -14,7 +14,7 @@ You can use this project as a template for your own updates channel. Write any i
     1. Write to your bot
     1. Run ``npm run chat_id``
     1. Set ``ADMIN_CHAT_ID``
-1. Setup job for checking updates on any machine with any intervals, crontab config for @tgn_water_info:
+1. Setup job for checking updates on any machine with any intervals, crontab config for t.me/tgn_voda_info:
     ```crontab
     5,20,35,50 8-23 * * * cd /home/user/projects/tgn-water && /home/user/.nvm/versions/node/v10.12.0/bin/node /home/user/projects/tgn-water/index.js
     ```
