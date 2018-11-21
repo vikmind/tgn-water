@@ -1,42 +1,18 @@
-require('dotenv-safe').load({
-  allowEmptyValues: true,
-});
-
-// Info parser
-const axios = require('axios');
-const url = process.env.URL;
-const { JSDOM } = require('jsdom');
-const windows1251 = require('windows-1251');
-const crypto = require('crypto');
-
-async function getWaterInfo() {
-  const doc = await axios.get(url,{
-    responseType: 'arraybuffer',
-  }).then(res => (new JSDOM(windows1251.decode(res.data.toString('binary')))).window.document);
-
-  const info = [].slice.call(doc.querySelectorAll('#cont2 table table tr:not(:last-child)>td:first-child>font'))
-    .map(node => {
-      const text = node.querySelector('font:first-child').textContent + '\n'
-        + node.querySelector('font:last-child').textContent;
-      return {
-        id: crypto.createHash('md5').update(text).digest('hex'),
-        text,
-      };
-    })
-    .reverse();
-
-  return info;
-}
+require('dotenv-safe').load();
 
 // Bot part
+const axios = require('axios');
 const token = process.env.TOKEN;
-const chat = `@${process.env.CHANNEL}`;
+const chat = process.env.CHANNEL;
+const admin = process.env.ADMIN_CHAT_ID;
 
 const sendMessage = (chat_id, text) =>
   axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
     chat_id,
     text,
-  });
+  }).catch(e => console.error(e.message));
+
+const errorHandler = (e) => sendMessage(admin, e.message);
 
 // Persistence
 const sqlite = require('sqlite');
@@ -48,20 +24,26 @@ const selectQuery = identifiers =>
 const insertQuery = ({ id, text }) =>
   `INSERT INTO messages(identifier, text) VALUES ('${id}', '${text}')`;
 
+const getInfo = require(`./${process.env.INFO_SCRIPT}`);
+
 async function main() {
-  const db = await dbPromise;
-  await db.run(prepareQuery);
+  try {
+    const db = await dbPromise;
+    await db.run(prepareQuery);
 
-  const data = await getWaterInfo();
-  const rows = await db.all(selectQuery(data.map(el => el.id)));
-  const dbIdentifiers = rows.map(row => row.identifier);
-  const newData = data.filter(el => !dbIdentifiers.includes(el.id));
+    const data = await getInfo();
+    const rows = await db.all(selectQuery(data.map(el => el.id)));
+    const dbIdentifiers = rows.map(row => row.identifier);
+    const newData = data.filter(el => !dbIdentifiers.includes(el.id));
 
-  // Promises in sequence
-  await newData.reduce((prev, el) => prev.then(async () => {
-    await sendMessage(chat, el.text);
-    return db.run(insertQuery(el));
-  }), Promise.resolve());
+    // Promises in sequence
+    await newData.reduce((prev, el) => prev.then(async () => {
+      await sendMessage(chat, el.text);
+      return db.run(insertQuery(el));
+    }), Promise.resolve());
+  } catch(e) {
+    errorHandler(e);
+  }
 };
 
 main();

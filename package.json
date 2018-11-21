@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "chat_id": "node getChatId.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Viktor Marchenko <viktor.marchenko@gmail.com>",
