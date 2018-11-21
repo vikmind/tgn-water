@@ -1,4 +1,4 @@
-# tgn-water
+# [t.me/tgn_voda_info](https://t.me/tgn_voda_info)
 Scraper and telegram bot for http://tgnvoda.ru/avarii.php
 
 ## Setup your own scraper and channel
