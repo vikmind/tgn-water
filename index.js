@@ -7,7 +7,7 @@ const chat = process.env.CHANNEL;
 const admin = process.env.ADMIN_CHAT_ID;
 
 const sendMessage = (chat_id, text) =>
-  axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
+  axios.post(`${process.env.TG_API_URL}/bot${token}/sendMessage`, {
     chat_id,
     text,
   }).catch(e => console.error(e.message));
