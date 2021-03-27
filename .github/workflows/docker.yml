@@ -1,0 +1,14 @@
+# Builds docker image and push it to registry
+name: Docker build
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+
