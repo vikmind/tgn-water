@@ -1,6 +1,7 @@
 # Runs the code from docker image and push updates to repo and channel
 name: Runner
 on:
+  push:
   workflow_dispatch:
   schedule:
     - cron: "5,20,35,50 5-20 * * *"
