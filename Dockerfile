@@ -10,4 +10,6 @@ COPY ./.env.example .
 
 RUN npm install
 
+COPY ./node_modules .
+
 CMD ["/bin/bash"]
