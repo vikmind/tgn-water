@@ -7,7 +7,7 @@ const chat = process.env.CHANNEL;
 const admin = process.env.ADMIN_CHAT_ID;
 
 const sendMessage = (chat_id, text) =>
-  axios.post(`${process.env.TG_API_URL}/bot${token}/sendMessage`, {
+  axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
     chat_id,
     text,
   }).catch(e => console.error(e.message));
@@ -16,7 +16,7 @@ const errorHandler = (e) => sendMessage(admin, e.message);
 
 // Persistence
 const sqlite = require('sqlite');
-const dbPromise =  sqlite.open('./db.sqlite', { Promise });
+const dbPromise =  sqlite.open(`${process.env.DATA_DIR}/db.sqlite`, { Promise });
 const prepareQuery = `
   CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, identifier TEXT, text TEXT);`;
 const selectQuery = identifiers =>

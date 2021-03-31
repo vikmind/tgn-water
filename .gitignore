@@ -25,4 +25,4 @@ logs
 *.log
 
 .env
-db.sqlite
+localdata/

@@ -1,0 +1,15 @@
+# Runs the code from docker image and push updates to repo and channel
+name: Runner
+on:
+  push:
+  schedule:
+    - cron: "5,20,35,50 5-20 * * *"
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+
