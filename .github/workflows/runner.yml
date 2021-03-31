@@ -23,11 +23,10 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       -
-        name: Install dependencies
-        run: npm install
-      -
         name: Run
         run: npm start
+        with:
+          entrypoint: /bin/bash
       # -
       #   name: Commit and push if changed
       #   run: |-
