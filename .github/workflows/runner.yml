@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: vikmind/tgn-water:latest
+      options: "--entrypoint /bin/bash"
       env:
         TOKEN: ${{ secrets.TOKEN }}
         CHANNEL: ${{ secrets.CHANNEL }}
