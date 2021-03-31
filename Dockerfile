@@ -10,4 +10,4 @@ COPY ./.env.example .
 
 RUN npm install
 
-ENTRYPOINT npm start
+CMD ["/bin/bash"]
