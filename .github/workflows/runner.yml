@@ -2,7 +2,6 @@
 name: Runner
 on:
   push:
-  workflow_dispatch:
   schedule:
     - cron: "5,20,35,50 5-20 * * *"
 
@@ -13,13 +12,4 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v2
-      -
-        name: Hello
-        run: echo "Hello from actions"
-      -
-        name: List
-        run: ls -al
-      -
-        name: Curl
-        run: curl http://tgnvoda.ru/avarii.php
 
