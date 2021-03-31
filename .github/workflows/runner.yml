@@ -19,4 +19,7 @@ jobs:
       -
         name: List
         run: ls -al
+      -
+        name: Curl
+        run: curl http://tgnvoda.ru/avarii.php
 
