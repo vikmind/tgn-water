@@ -8,8 +8,29 @@ on:
 jobs:
   scheduled:
     runs-on: ubuntu-latest
+    container:
+      image: vikmind/tgn-water:latest
+      env:
+        TOKEN: ${{ secrets.TOKEN }}
+        CHANNEL: ${{ secrets.CHANNEL }}
+        ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
+        INFO_SCRIPT: 'getWaterInfo.js'
+        DATA_DIR: '/data/'
+      volumes:
+        - data:/data
     steps:
       -
         name: Checkout
         uses: actions/checkout@v2
-
+      -
+        name: Run
+        run: npm start
+      # -
+      #   name: Commit and push if changed
+      #   run: |-
+      #       git config user.name "Automated"
+      #       git config user.email "actions@users.noreply.github.com"
+      #       git add -A
+      #       timestamp=$(date --rfc-3339=seconds --utc)
+      #       git commit -m "Latest data: ${timestamp}" || exit 0
+      #       git push
