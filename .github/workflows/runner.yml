@@ -8,6 +8,12 @@ on:
 jobs:
   scheduled:
     runs-on: ubuntu-latest
+    env:
+      TOKEN: ${{ secrets.TOKEN }}
+      CHANNEL: ${{ secrets.CHANNEL }}
+      ADMIN_CHAT_ID: ${{ secrets.ADMIN_CHAT_ID }}
+      INFO_SCRIPT: 'getWaterInfo.js'
+      DATA_DIR: '/data'
     # container:
     #   image: vikmind/tgn-water:latest
     #   options: "--entrypoint bash"
