@@ -3,7 +3,7 @@ name: Runner
 on:
   push:
   schedule:
-    - cron: "5,20,35,50 5-20 * * *"
+    - cron: "10,30,50 5-20 * * *"
 
 jobs:
   scheduled:

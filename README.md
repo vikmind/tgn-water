@@ -1,20 +1,20 @@
 # [t.me/tgn_voda_info](https://t.me/tgn_voda_info)
-Scraper and telegram bot for http://tgnvoda.ru/avarii.php
+
+Scraper and telegram bot for http://tgnvoda.ru/avarii.php.
 
 ## Setup your own scraper and channel
 
-> If you want to use [dotenv](https://github.com/motdotla/dotenv) for managing environment variables, create ``.env`` file using ``.env.example`` as template.
+You can use this project as a template for your own updates channel. In order to do so, you should
 
-You can use this project as a template for your own updates channel. Write any implementation of scraper function returning data in format ``[{ id, text }]`` (check ``getWaterInfo.js`` as example) and set ``INFO_SCRIPT`` variable with its name. The next steps are:
-
-1. Create your bot by chatting to [BotFather](https://t.me/botfather) and fill ``TOKEN`` variable
-1. Create channel and fill ``CHANNEL`` variable
+1. Fork the repo
+1. Create scraper script using `getWaterInfo.js` as example
+1. Replace `getWaterInfo` in `.github/workflows/runner.yml`
+1. Create your bot by chatting to [BotFather](https://t.me/botfather) and setup `TOKEN` secret (github.com/user/repo/settings/secrets/actions)
+1. Create channel and setup `CHANNEL` secret
 1. Add bot to the channel as admin
 1. Get chat id for error reporting:
     1. Write to your bot
-    1. Run ``npm run chat_id``
-    1. Set ``ADMIN_CHAT_ID``
-1. Setup job for checking updates on any machine with any intervals, crontab config for t.me/tgn_voda_info:
-    ```crontab
-    5,20,35,50 8-23 * * * cd /home/user/projects/tgn-water && /home/user/.nvm/versions/node/v10.12.0/bin/node /home/user/projects/tgn-water/index.js
-    ```
+    1. Run `npm run chat_id`
+    1. Set `ADMIN_CHAT_ID` secret (you can use it for debugging instead of `CHANNEL`)
+1. Create credentials for docker hub [here](https://hub.docker.com/settings/security).
+1. Set `DOCKERHUB_TOKEN` and `DOCKERHUB_USERNAME` secrets.
