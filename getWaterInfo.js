@@ -18,7 +18,7 @@ module.exports = async function getWaterInfo() {
         text,
       };
     })
-    .filter(({ text }) => !text.includes('href'))
+    .filter(({ text }) => !text.includes('href') && !text.includes('script'))
     .reverse();
 
   return info;
