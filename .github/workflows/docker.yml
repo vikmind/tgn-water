@@ -1,9 +1,9 @@
 # Builds docker image and push it to registry
 name: Docker build
-on:
-  push:
-    branches:
-      - 'master'
+# on:
+#   push:
+#     branches:
+#       - 'master'
 
 jobs:
   build:
